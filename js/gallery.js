@@ -44,11 +44,13 @@ function onGalleryImgContainerClick(e) {
 // закрити модалку
 const closeBtn = document.querySelector('button[data-action="close-lightbox"]');
 closeBtn.addEventListener('click', onModalCloseBtnClick);
-
-function onModalCloseBtnClick(e) {
+function closeModal() {
   modalEl.classList.remove('is-open');
   modalImg.src = '';
   modalImg.alt = '';
+}
+function onModalCloseBtnClick(e) {
+  closeModal();
 }
 // закрити модалку по кліку в оверлей
 window.addEventListener('click', onModalOverlayClick);
@@ -56,9 +58,7 @@ function onModalOverlayClick(e) {
   if (!e.target.classList.contains('lightbox__overlay')) {
     return;
   }
-  modalEl.classList.remove('is-open');
-  modalImg.src = '';
-  modalImg.alt = '';
+  closeModal();
 }
 // закрити модалку на Esc
 window.addEventListener('keydown', onEscBtnClick);
@@ -66,7 +66,5 @@ function onEscBtnClick(e) {
   if (e.code !== 'Escape') {
     return;
   }
-  modalEl.classList.remove('is-open');
-  modalImg.src = '';
-  modalImg.alt = '';
+  closeModal();
 }
