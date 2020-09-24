@@ -1,21 +1,5 @@
 import images from './gallery-items.js';
 
-{
-  /* <li class="gallery__item">
-    <a
-        class="gallery__link"
-        href="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg"
-    >
-        <img
-            class="gallery__image"
-            src="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546__340.jpg"
-            data-source="https://cdn.pixabay.com/photo/2010/12/13/10/13/tulips-2546_1280.jpg"
-            alt="Tulips"
-        />
-    </a>
-</li> */
-}
-
 const galleryListEl = document.querySelector('.js-gallery');
 const galleryMarkup = createGalleryCardsMarkup(images);
 galleryListEl.insertAdjacentHTML('beforeend', galleryMarkup);
@@ -37,4 +21,52 @@ function createGalleryCardsMarkup(images) {
 </li>`;
     })
     .join('');
+}
+
+// відкрити модалку
+galleryListEl.addEventListener('click', onGalleryImgContainerClick);
+const modalEl = document.querySelector('.js-lightbox');
+const modalImg = document.querySelector('.lightbox__image');
+
+function onGalleryImgContainerClick(e) {
+  const isImgEl = e.target.classList.contains('gallery__image');
+  const modalImgLink = e.target.dataset.source;
+  const modalImgAlt = e.target.alt;
+
+  if (!isImgEl) {
+    return;
+  }
+  e.preventDefault();
+  modalEl.classList.add('is-open');
+  modalImg.src = modalImgLink;
+  modalImg.alt = modalImgAlt;
+}
+// закрити модалку
+const closeBtn = document.querySelector('button[data-action="close-lightbox"]');
+closeBtn.addEventListener('click', onModalCloseBtnClick);
+
+function onModalCloseBtnClick(e) {
+  modalEl.classList.remove('is-open');
+  modalImg.src = '';
+  modalImg.alt = '';
+}
+// закрити модалку по кліку в оверлей
+window.addEventListener('click', onModalOverlayClick);
+function onModalOverlayClick(e) {
+  if (!e.target.classList.contains('lightbox__overlay')) {
+    return;
+  }
+  modalEl.classList.remove('is-open');
+  modalImg.src = '';
+  modalImg.alt = '';
+}
+// закрити модалку на Esc
+window.addEventListener('keydown', onEscBtnClick);
+function onEscBtnClick(e) {
+  if (e.code !== 'Escape') {
+    return;
+  }
+  modalEl.classList.remove('is-open');
+  modalImg.src = '';
+  modalImg.alt = '';
 }
