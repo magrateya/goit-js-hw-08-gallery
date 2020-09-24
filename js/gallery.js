@@ -1,3 +1,4 @@
+import galleryItems from './gallery-items.js';
 import images from './gallery-items.js';
 
 const galleryListEl = document.querySelector('.js-gallery');
@@ -48,6 +49,8 @@ function closeModal() {
   modalEl.classList.remove('is-open');
   modalImg.src = '';
   modalImg.alt = '';
+
+  windiw.removeEventListener('keydown', onEscBtnClick);
 }
 function onModalCloseBtnClick(e) {
   closeModal();
