@@ -41,6 +41,10 @@ function onGalleryImgContainerClick(e) {
   modalEl.classList.add('is-open');
   modalImg.src = modalImgLink;
   modalImg.alt = modalImgAlt;
+
+  window.addEventListener('keydown', onEscBtnClick);
+
+  window.addEventListener('keydown', onArrBtnClick);
 }
 // закрити модалку
 const closeBtn = document.querySelector('button[data-action="close-lightbox"]');
@@ -51,6 +55,8 @@ function closeModal() {
   modalImg.alt = '';
 
   window.removeEventListener('keydown', onEscBtnClick);
+
+  window.removeEventListener('keydown', onArrBtnClick);
 }
 function onModalCloseBtnClick(e) {
   closeModal();
@@ -70,4 +76,27 @@ function onEscBtnClick(e) {
     return;
   }
   closeModal();
+}
+
+// гортання картинок стрілками
+
+// window.addEventListener('keydown', onArrBtnClick);
+function onArrBtnClick(e) {
+  let imgInd = images.findIndex(image => image.original === modalImg.src);
+
+  if (e.code === 'ArrowLeft') {
+    if (imgInd === 0) {
+      imgInd = images.length - imgInd;
+    }
+    imgInd -= 1;
+  }
+
+  if (e.code === 'ArrowRight') {
+    if (imgInd === images.length - 1) {
+      imgInd = imgInd - images.length;
+    }
+    imgInd += 1;
+  }
+
+  modalImg.src = images[imgInd].original;
 }
