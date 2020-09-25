@@ -50,7 +50,7 @@ function closeModal() {
   modalImg.src = '';
   modalImg.alt = '';
 
-  windiw.removeEventListener('keydown', onEscBtnClick);
+  window.removeEventListener('keydown', onEscBtnClick);
 }
 function onModalCloseBtnClick(e) {
   closeModal();
